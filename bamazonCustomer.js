@@ -16,12 +16,33 @@ var connection = mysql.createConnection({
   connection.connect(function(err) {
     if (err) throw err;
     });
- 
-     function showMerchandise() {
-      connection.query("SELECT * FROM products", function(err, res) {
-      console.table(res)
-      });//end of query
+ var arr = [];
+function showMerchandise() {
+    connection.query("SELECT * FROM products", function(err, res) {
+    for (let r of res){
+      arr.push(r.id.toString());
+    }
+    console.table(res)
+    purchase();
+    });//end of query
 
   }//end of showMerchandise
   showMerchandise();
- 
+ // purchase();
+  
+  //function which prompts user which item they want by id, and what quantity
+  function purchase() {
+    console.log("arr", arr)
+    inquirer
+      .prompt({
+        name: "itemID",
+        type: "input",
+        message: "What is the item ID you would like to purchase? ",
+        choices: arr
+      }).then(function(ans){
+        console.log(ans)
+        checkItemamount(res.itemID)
+        //call to another function that 
+      })
+  }//end of function purchase
+  
