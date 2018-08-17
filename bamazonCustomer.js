@@ -45,25 +45,12 @@ function showMerchandise() {
         {
         name: "id",
         message: "What is the item ID you would like to purchase? ",
-        validate: function(value){
-          var valid = value.match(/^[0-9]+$/)
-          if(valid){
-            return true
-          }
-            return 'Please enter a valid Product ID'
-        }
-        
+       
         },
         {
         name: "stock_quantity",
         message: "How many would you like to purchase? ",
-        validate: function(value){
-          var valid = value.match(/^[0-9]+$/)
-          if(valid){
-            return true
-          }
-            return 'Please enter a numerical value'
-        }
+      
       }
       ])
         
