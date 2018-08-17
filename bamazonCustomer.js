@@ -5,6 +5,7 @@ var table = require("console.table");
 var amountDue;
 var department;
 
+
 var connection = mysql.createConnection({
     host: "localhost",
   // Your port; if not 3306
@@ -43,7 +44,6 @@ function showMerchandise() {
       .prompt([
         {
         name: "id",
-        //type: "input",
         message: "What is the item ID you would like to purchase? ",
         validate: function(value){
           var valid = value.match(/^[0-9]+$/)
@@ -56,7 +56,6 @@ function showMerchandise() {
         },
         {
         name: "stock_quantity",
-        //type: "input",
         message: "How many would you like to purchase? ",
         validate: function(value){
           var valid = value.match(/^[0-9]+$/)
@@ -90,7 +89,7 @@ function showMerchandise() {
               id: ans.id
             }], function(err, res){});
             //update departments table
-           // logPurchase();
+            
             newPurchase();
          
           }//end of else 
@@ -102,13 +101,13 @@ function showMerchandise() {
           inquirer.prompt([{
             type: 'confirm',
             name: 'choice',
-            message: 'Would you like to place another order?'
+            message: 'Is there anything else you would like to purchase today?'
           }]).then(function(answer){
             if(answer.choice){
               purchase();
             }
             else{
-              console.log('Thank you for shopping at Bamazon!');
+              console.log('Thank you for shopping with us!');
               connection.end();
             }
           })//end of .then
