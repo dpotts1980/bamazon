@@ -69,17 +69,14 @@ function showMerchandise() {
       ])
         
       .then(function(ans){
-       /*  var item = ans.id; 
-        var quantity = ans.stock_quantity; */
-       // console.log(ans.id);
-        //console.log(ans.stock_quantity);
+      
          connection.query("SELECT * FROM products WHERE id = ?", [ans.id], function(err,res) {
           if(ans.stock_quantity > res[0].stock_quantity) {
             console.log('Insufficient Quantity');
 		      	console.log('This order has been cancelled');
 			      console.log('');
 			      newPurchase();
-    }
+    }//end of if statement
           else{
             amountDue = res[0].price * ans.stock_quantity;
             department = res[0].department_name;
@@ -87,10 +84,36 @@ function showMerchandise() {
 			      console.log('You owe $' + amountDue);
             console.log('');
             //here is where we'll update our inventory
+            connection.query('UPDATE products SET ? Where ?', [{
+              stock_quantity: res[0].stock_quantity - ans.stock_quantity
+            },{
+              id: ans.id
+            }], function(err, res){});
+            //update departments table
+           // logPurchase();
+            newPurchase();
+         
+          }//end of else 
+          });//end of "SELECT * FROM products WHERE id = ?
+        });//end of .then
 
-          }
-          });
-        });
+        //allows the customer to make another purchase//
+        function newPurchase(){
+          inquirer.prompt([{
+            type: 'confirm',
+            name: 'choice',
+            message: 'Would you like to place another order?'
+          }]).then(function(answer){
+            if(answer.choice){
+              purchase();
+            }
+            else{
+              console.log('Thank you for shopping at Bamazon!');
+              connection.end();
+            }
+          })//end of .then
+        };//end of function newPurchase
+        
         
   }//end of function purchase
   
