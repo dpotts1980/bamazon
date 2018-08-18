@@ -44,14 +44,14 @@ function showMerchandise() {
       .prompt([
         {
         name: "id",
+        type: "input",
         message: "What is the item ID you would like to purchase? ",
-       
-        },
+       },
         {
         name: "stock_quantity",
+        type: "input",
         message: "How many would you like to purchase? ",
-      
-      }
+        }
       ])
         
       .then(function(ans){
